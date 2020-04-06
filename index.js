@@ -22,13 +22,21 @@ server.get('/', (req, res) => {
 
 server.post(`/api/users`, (req, res) => {
     const userInfo = req.body;
-    if(userInfo.length==2){
+    console.log(userInfo)
+    if(Object.keys(userInfo).length == 2){
         userInfo.id = shortid.generate();
         users.push(userInfo);
         res.status(201).json(userInfo)
     }else{
         res.status(400).json({errorMessage: "Please provide name and bio for the user."})
     }
+    const newUser = users.find((user)=> user.id == userInfo.id)
+    if(newUser){
+
+    }else{
+        res.status(500).json({errorMessage: "There was an error while saving the user to the database"})
+    }
+
 })
 
 server.get(`/api/users`, (req, res) => {
