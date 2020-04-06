@@ -22,9 +22,13 @@ server.get('/', (req, res) => {
 
 server.post(`/api/users`, (req, res) => {
     const userInfo = req.body;
-    userInfo.id = shortid.generate();
-    users.push(userInfo);
-    res.status(201).json(userInfo)
+    if(userInfo.length==2){
+        userInfo.id = shortid.generate();
+        users.push(userInfo);
+        res.status(201).json(userInfo)
+    }else{
+        res.status(400).json({errorMessage: "Please provide name and bio for the user."})
+    }
 })
 
 server.get(`/api/users`, (req, res) => {
